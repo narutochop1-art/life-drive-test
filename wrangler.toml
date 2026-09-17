@@ -4,5 +4,5 @@ pages_build_output_dir = "public"
 [[d1_databases]]
 binding = "DB"
 database_name = "life-drive-test"
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+database_id = "c93b3776-541d-4765-8494-2ebd316dff50"
 preview_database_id = "DB"
