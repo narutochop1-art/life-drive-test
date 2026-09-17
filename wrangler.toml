@@ -5,4 +5,4 @@ pages_build_output_dir = "public"
 binding = "DB"
 database_name = "life-drive-test"
 database_id = "c93b3776-541d-4765-8494-2ebd316dff50"
-preview_database_id = "DB"
+
