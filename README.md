@@ -32,7 +32,7 @@ A完成测试 → 复制/分享邀请链接 → B打开链接并完成20题 → 
 
 ## V4.1 local D1 testing
 
-The local referral/unlock flow needs a local D1 binding. In `wrangler.toml`, `preview_database_id = "DB"` is included for Pages local development. Replace `REPLACE_WITH_YOUR_D1_DATABASE_ID` with the real D1 database ID, or download the current Pages config with `npx wrangler pages download config` after logging in. Then run:
+Production D1 is configured in `wrangler.toml` with the real database UUID. For local Pages development, Wrangler will use its local D1 state.
 
 ```powershell
 npx wrangler d1 migrations apply life-drive-test --local
