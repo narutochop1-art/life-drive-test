@@ -3,6 +3,5 @@ compatibility_date = "2026-09-12"
 pages_build_output_dir = "public"
 [[d1_databases]]
 binding = "DB"
-database_name = "life-drive-test"
+database_name = "life-drive-db"
 database_id = "c93b3776-541d-4765-8494-2ebd316dff50"
-
