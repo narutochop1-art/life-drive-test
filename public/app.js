@@ -3,7 +3,7 @@ const $=x=>document.getElementById(x);
 const p=new URLSearchParams(location.search);
 const invite=p.get('invite')||'';
 const src=p.get('source')||'direct';
-const VISITOR_KEY='life_drive_visitor_v5';
+const VISITOR_KEY='life_drive_visitor_v7';
 const visitorId=localStorage.getItem(VISITOR_KEY)||crypto.randomUUID();
 localStorage.setItem(VISITOR_KEY,visitorId);
 const sid=crypto.randomUUID();
