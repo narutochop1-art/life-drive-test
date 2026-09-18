@@ -1,2 +1,3 @@
-ALTER TABLE events ADD COLUMN visitor_id TEXT;
-CREATE INDEX IF NOT EXISTS idx_events_visitor ON events(visitor_id);
+-- LEGACY / OPTIONAL. V5 no longer requires this migration for referrals.
+-- visitor_id is stored inside events.payload so existing production D1 schemas work without ALTER TABLE.
+-- Leave this file in the repository; do not apply it unless you explicitly want the extra visitor_id column.
