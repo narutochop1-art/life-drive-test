@@ -17,5 +17,5 @@ export async function onRequestPost({request,env}){
    }
   }
   return Response.json({ok:true});
- }catch(e){console.error('event_error',e);return Response.json({ok:false,error:'event_failed'},{status:500})}
+ }catch(e){console.error('event_error',e?.message||e);return Response.json({ok:false,error:'event_failed'},{status:500})}
 }

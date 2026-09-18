@@ -36,3 +36,14 @@ A完成测试 → 分享邀请链接 → B打开链接并完成20题 → A原页
 
 ## 产品说明
 这是探索性自测，不是经过临床验证的心理诊断或人格测量工具。题目权重和56种结果属于产品模型，应通过真实用户数据继续迭代。
+
+
+## V6 debugging endpoint
+
+After deployment, open `/api/health`.
+
+Expected result:
+`{"ok":true,"db":true,"tables":["events","unlocks"],"events":true,"unlocks":true}`
+
+If `db_unavailable` appears, the Pages production D1 binding named `DB` is missing.
+If `events` or `unlocks` is false, apply the base migration `migrations/0001_init.sql` to the production D1 database.

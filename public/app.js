@@ -12,7 +12,23 @@ const ev=async(type,payload={})=>{try{const r=await fetch('/api/event',{method:'
 const show=id=>{document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));$(id).classList.add('on');scrollTo(0,0)};
 function render(){let q=QUESTIONS[i];if(!q||!Array.isArray(q.options)||q.options.length!==4||q.options.some(o=>!o.text))throw new Error('第'+(i+1)+'题题目或选项缺失，请检查 questions.js。');$('pg').textContent=`${i+1} / 20`;$('bar').style.width=(i+1)*5+'%';$('qn').textContent='问题 '+(i+1);$('q').textContent=q.title;$('opts').innerHTML='';q.options.forEach((o,j)=>{let b=document.createElement('button');b.className='option';b.textContent=String.fromCharCode(65+j)+' · '+o.text;b.onclick=()=>pick(j);$('opts').appendChild(b)})}
 async function pick(j){a[i]=j;if(i<19){i++;render();return}s=calc(a);t=top3(s);await ev('test_complete',{top:t,scores:s,combo:keyOf(t)});result()}
-function setCharacter(prefix){const c=CHARACTER_META[keyOf(t)];if(!c)return;$(prefix+'CharacterName').textContent=c.visualTitle;$(prefix+'CharacterDesc').textContent=c.visualDescription;const art=$(prefix+'CharacterArt');const fb=$(prefix+'CharacterFallback');const img=new Image();img.alt=c.displayName;img.loading='lazy';img.src=c.assetPath;img.onload=()=>{art.innerHTML='';art.appendChild(img)};img.onerror=()=>{fb.textContent=c.icon+' '+c.displayName;}}
+function setCharacter(prefix){
+ const c=CHARACTER_META[keyOf(t)];
+ if(!c)return;
+ const ids=prefix
+   ? {name:'fullCharacterName',desc:'fullCharacterDesc',art:'fullCharacterArt',fallback:'fullCharacterFallback'}
+   : {name:'characterName',desc:'characterDesc',art:'characterArt',fallback:'characterFallback'};
+ const name=$(ids.name),desc=$(ids.desc),art=$(ids.art),fb=$(ids.fallback);
+ if(name)name.textContent=c.visualTitle;
+ if(desc)desc.textContent=c.visualDescription;
+ if(!art||!fb)return;
+ const img=new Image();
+ img.alt=c.displayName;
+ img.loading='lazy';
+ img.src=c.assetPath;
+ img.onload=()=>{art.innerHTML='';art.appendChild(img)};
+ img.onerror=()=>{fb.textContent=c.icon+' '+c.displayName;};
+}
 function result(){const c=comboData(t);$('comboIcon').textContent=c?.[1]||'✨';$('combo').textContent=c?.[0]||'复合驱动力者';$('tagline').textContent=c?.[2]||'';$('freeCore').textContent=c?.[3]||'';$('freeTension').textContent=c?.[4]||'';$('shareLine').textContent=c?.[9]||'';$('dims').innerHTML=t.map((k,n)=>`<div class="dim"><div class="dh"><b>${n+1}. ${D[k].icon} ${D[k].name}</b><span>${s[k]}</span></div><div class="track"><i style="width:${Math.min(100,s[k])}%"></i></div><small>${D[k].keywords}</small></div>`).join('');$('lockTitle').textContent='还有一部分结果没有告诉你';$('status').textContent='';$('invite').textContent='邀请朋友，解锁完整的我';$('copy').textContent='复制邀请链接';$('copy').style.display='block';setCharacter('');show('result');startUnlockPolling()}
 async function check(){try{const r=await fetch('/api/unlock?id='+encodeURIComponent(sid),{cache:'no-store'});const d=await r.json();if(d.unlocked){unlocked=true;clearInterval(pollTimer);$('lockCard').classList.add('unlocked');$('lockTitle').textContent='🎉 完整结果已解锁';$('lockText').textContent='你的朋友已经完成测试。现在可以查看完整的你。';$('invite').textContent='查看完整报告';$('invite').onclick=full;$('copy').style.display='none';$('status').textContent='已解锁';}}catch(e){console.warn('[life-drive] unlock check failed',e)}}
 function startUnlockPolling(){clearInterval(pollTimer);check();pollTimer=setInterval(()=>{if(!unlocked)check()},3000)}
