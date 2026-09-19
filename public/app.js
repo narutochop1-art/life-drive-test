@@ -8,10 +8,10 @@ const visitorId=localStorage.getItem(VISITOR_KEY)||crypto.randomUUID();
 localStorage.setItem(VISITOR_KEY,visitorId);
 const sid=crypto.randomUUID();
 let i=0,a=[],s,t,unlocked=false,pollTimer=null;
-const ev=async(type,payload={})=>{try{const r=await fetch('/api/event',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({event_type:type,session_id:sid,visitor_id:visitorId,invite_id:invite,source:src,payload})});if(!r.ok)throw new Error('event '+r.status);return true}catch(e){console.warn('[life-drive]',type,e);return false}};
+const ev=async(type,payload={})=>{try{const r=await fetch('/api/event',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({event_type:type,session_id:sid,visitor_id:visitorId,invite_id:invite,source:src,payload})});const text=await r.text();let data=null;try{data=JSON.parse(text)}catch{}if(!r.ok)throw new Error(`event ${r.status} ${data?.error||''} ${data?.detail||''}`.trim());return true}catch(e){console.warn('[life-drive]',type,e);return false}};
 const show=id=>{document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));$(id).classList.add('on');scrollTo(0,0)};
 function render(){let q=QUESTIONS[i];if(!q||!Array.isArray(q.options)||q.options.length!==4||q.options.some(o=>!o.text))throw new Error('第'+(i+1)+'题题目或选项缺失，请检查 questions.js。');$('pg').textContent=`${i+1} / 20`;$('bar').style.width=(i+1)*5+'%';$('qn').textContent='问题 '+(i+1);$('q').textContent=q.title;$('opts').innerHTML='';q.options.forEach((o,j)=>{let b=document.createElement('button');b.className='option';b.textContent=String.fromCharCode(65+j)+' · '+o.text;b.onclick=()=>pick(j);$('opts').appendChild(b)})}
-async function pick(j){a[i]=j;if(i<19){i++;render();return}s=calc(a);t=top3(s);await ev('test_complete',{top:t,scores:s,combo:keyOf(t)});result()}
+async function pick(j){a[i]=j;if(i<19){i++;render();return}s=calc(a);t=top3(s);const saved=await ev('test_complete',{top:t,scores:s,combo:keyOf(t)});if(!saved){alert('结果保存失败，请稍后重试。请不要关闭此页面。');return}result()}
 function setCharacter(prefix){
  const c=CHARACTER_META[keyOf(t)];
  if(!c)return;

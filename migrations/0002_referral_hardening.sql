@@ -1,3 +1,4 @@
--- LEGACY / OPTIONAL. V5 no longer requires this migration for referrals.
--- visitor_id is stored inside events.payload so existing production D1 schemas work without ALTER TABLE.
--- Leave this file in the repository; do not apply it unless you explicitly want the extra visitor_id column.
+-- Legacy placeholder. Current production schema is:
+-- events(id,type,payload,created_at)
+-- unlocks(id,owner_id,friend_id,created_at)
+-- No visitor_id column is required; visitor/session IDs are stored in events.payload.
