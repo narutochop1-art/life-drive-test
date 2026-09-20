@@ -16,3 +16,7 @@ A 完成 → 分享 `invite=A的session_id` → B 完成 → 写入 `unlocks(own
 
 `/api/health` 现在会检查字段结构，而不只是检查表存在。
 `/api/event` 失败时会把 D1 具体错误带到 Console，最后一题不会在写入失败时假装成功。
+
+
+## Character assets
+The 56 final character illustrations are included in `public/assets/characters/` as WEBP files named by result key (for example `EFA.webp`, `CRP.webp`).
