@@ -20,3 +20,9 @@ A 完成 → 分享 `invite=A的session_id` → B 完成 → 写入 `unlocks(own
 
 ## Character assets
 The 56 final character illustrations are included in `public/assets/characters/` as WEBP files named by result key (for example `EFA.webp`, `CRP.webp`).
+
+
+## V11 UI change
+- Removed the top result icon and top English label from both the partial result and full report views.
+- Kept the 56 character images unchanged.
+- Reduced result hero top padding to keep the result page visually compact after removing the top elements.
