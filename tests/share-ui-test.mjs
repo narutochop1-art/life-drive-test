@@ -8,12 +8,16 @@ const chars = fs.readFileSync(path.join(root,'public/characters.js'),'utf8');
 
 if (html.includes('id="copy"')) throw new Error('旧的“复制邀请链接”按钮仍存在');
 if (!html.includes('id="shareResult"') || !html.includes('id="shareFullResult"')) throw new Error('结果图片分享按钮缺失');
-if (!html.includes('id="shareStatus"') || !html.includes('id="fullShareStatus"')) throw new Error('分享状态提示缺失');
-if (!app.includes('function shareResultImage()')) throw new Error('结果图片分享函数缺失');
-if (!app.includes('navigator.canShare({files:[file]})')) throw new Error('未使用图片文件分享能力');
-if (!app.includes("PUBLIC_TEST_URL='https://life-drive-test.pages.dev/'")) throw new Error('生产测试地址缺失');
-if (!app.includes('不要刷新这个页面，也不用重新测试')) throw new Error('等待朋友自动解锁提示不够明确');
-if (!app.includes("img.src=c.assetPath+(c.assetPath.includes('?')?'&':'?')+'v=12'")) throw new Error('人物图片缓存版本未更新');
+if (!html.includes('id="shareImageModal"') || !html.includes('id="sharePreviewImage"')) throw new Error('结果图片预览弹窗缺失');
+if (!html.includes('id="saveShareImage"')) throw new Error('保存图片按钮缺失');
+if (!app.includes('function shareResultImage()')) throw new Error('结果图片函数缺失');
+if (app.includes('navigator.canShare({files:[file]})')) throw new Error('仍在直接调用原生图片文件分享，iOS/微信链路不稳定');
+if (!app.includes('result_image_preview')) throw new Error('结果图片应先生成并展示');
+if (!app.includes('function isIOSDevice()')) throw new Error('缺少 iOS 判断');
+if (!app.includes("method:ios?'copy_invite_ios':'copy_invite'")) throw new Error('iOS 邀请链接未强制走复制链路');
+if (!app.includes('navigator.clipboard.writeText(text)')) throw new Error('缺少稳定复制逻辑');
+if (!app.includes('不要刷新，也不用重新测试')) throw new Error('自动解锁提示不够明确');
+if (!app.includes("img.src=c.assetPath+(c.assetPath.includes('?')?'&':'?')+'v=13'")) throw new Error('人物图片缓存版本被错误改动');
 
 const keys=[...chars.matchAll(/^  "([A-Z]{3})": \{/gm)].map(m=>m[1]);
 if (keys.length!==56) throw new Error(`人格数量=${keys.length}`);
@@ -22,4 +26,4 @@ for (const key of keys) {
   if (!fs.existsSync(p)) throw new Error(`缺少图片 ${key}.webp`);
 }
 
-console.log(JSON.stringify({ok:true,characters:56,shareImageButtons:2,copyButtonRemoved:true,productionUrl:'https://life-drive-test.pages.dev/'},null,2));
+console.log(JSON.stringify({ok:true,characters:56,shareImageButtons:2,copyButtonRemoved:true,iosInvite:'clipboard',resultImage:'preview-modal',productionUrl:'https://life-drive-test.pages.dev/'},null,2));

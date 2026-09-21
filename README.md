@@ -25,3 +25,6 @@ A 完成 → 分享邀请 → B 完成 → 写入 `unlocks` → A 页面轮询�
 - 移动端支持将 PNG 直接交给系统分享；不支持文件分享的设备会自动下载结果图片。
 - 完整报告页面同样提供结果图片分享按钮。
 - 结果图片使用当前 56 个角色原图，不修改角色设计。
+
+
+V13 share behavior: on iOS, invitation sharing uses a deterministic clipboard flow instead of the native share sheet; result sharing generates an in-page image preview so the user can long-press/save and then share manually.
