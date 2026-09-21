@@ -31,3 +31,6 @@ V13 share behavior: on iOS, invitation sharing uses a deterministic clipboard fl
 
 ## V14 微信内邀请分享
 在微信内置浏览器中，邀请朋友按钮不再调用 iOS/微信系统分享扩展，而是把当前页面 URL 原地切换为本次邀请链接，然后引导用户使用微信右上角“⋯ → 转发/发送给朋友”。这样分享的是包含 invite 参数的当前页面，用户发送后可以回到原页面继续等待自动解锁。普通 Safari/Chrome 等环境仍使用原来的原生分享或复制回退。
+
+
+V15 微信邀请分享修复：在微信内点击邀请后，将邀请 URL 通过 location.replace 真实导航加载，使 iOS 微信把带 invite 参数的地址作为初始页面 URL；使用 sessionStorage 保存原测试结果并在导航后恢复，回到页面继续轮询解锁。
