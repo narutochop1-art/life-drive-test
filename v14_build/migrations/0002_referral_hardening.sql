@@ -1,0 +1,4 @@
+-- Legacy placeholder. Current production schema is:
+-- events(id,type,payload,created_at)
+-- unlocks(id,owner_id,friend_id,created_at)
+-- No visitor_id column is required; visitor/session IDs are stored in events.payload.

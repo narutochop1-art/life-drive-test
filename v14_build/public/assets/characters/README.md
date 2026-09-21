@@ -1,0 +1,15 @@
+# 56种结果角色图片
+
+每个结果都有一个固定图片文件名：`<组合Key>.webp`。
+
+例如：
+- `EFS.webp` → 自由远行者
+- `AMP.webp` → 成就建造者
+- `CRP.webp` → 归属建造者
+
+把图片放进本目录后，结果页会自动显示；没有图片时会显示角色占位卡，不影响测试。
+
+建议：竖版或1:1、主体人物居中、不要在图片里写文字，建议尺寸至少 800×800。每个角色的视觉定位和生图提示词见 `public/characters.js`。
+
+
+V10 uses eager loading for the currently visible result character. Use `/api/asset-check` after deployment to verify all 56 image files are being served.
